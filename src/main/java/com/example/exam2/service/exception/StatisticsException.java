@@ -1,6 +1,6 @@
 package com.example.exam2.service.exception;
 
-public class StatisticsException extends RuntimeException{
+public class StatisticsException extends ServiceException{
     public StatisticsException() {
         super();
     }

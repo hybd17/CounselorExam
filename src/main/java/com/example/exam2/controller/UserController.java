@@ -33,9 +33,7 @@ public class UserController {
     public R register(@RequestBody User user){
         boolean success = userService.register(user);
         if(success)
-        {
             return R.ok();
-        }
         else
             return R.error();
     }

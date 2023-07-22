@@ -9,6 +9,9 @@ import java.util.Date;
 
 @Component
 @Slf4j
+/**
+ * mybatis-plus自动填充
+ */
 public class MyMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {

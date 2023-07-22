@@ -18,6 +18,9 @@ public class StpInterfaceImpl implements StpInterface {
         return null;
     }
 
+    /**
+     * 用户授权
+     */
     @Override
     public List<String> getRoleList(Object o, String s) {
         User user = userMapper.selectById(o.toString());

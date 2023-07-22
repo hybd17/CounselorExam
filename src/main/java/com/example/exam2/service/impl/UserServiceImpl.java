@@ -7,6 +7,8 @@ import com.example.exam2.entity.*;
 import com.example.exam2.mapper.*;
 import com.example.exam2.service.UserService;
 import com.example.exam2.service.exception.EnrollException;
+import com.example.exam2.service.exception.RegisterException;
+import com.example.exam2.service.exception.SelectCounselorsException;
 import com.example.exam2.service.exception.StatisticsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +40,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         queryWrapper.eq("username",user.getUsername());
         User existingUser = getOne(queryWrapper);
         if(existingUser!=null){
-            throw new RuntimeException("User already exists");
+            throw new RegisterException("User already exists");
         }
         boolean save = save(user);
         return save;
@@ -125,29 +127,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public Integer getCountByGrouping(String grouping) {
-        return counselorsMapper.selectCount(new QueryWrapper<Counselors>().eq("grouping",grouping));
-    }
-
-    @Override
-    public User selectByUsername(String username) {
-        return getOne(new QueryWrapper<User>().eq("username", username));
-    }
-
-    @Override
-    public List<Integer> generateRandomNumbers(int n, int lowerBound, int upperBound) {
-        Random random = new Random();
-        List<Integer> randomNumbers = new ArrayList<>();
-
-        for (int i = 0; i < n; i++) {
-            int randomNumber = random.nextInt(upperBound - lowerBound + 1) + lowerBound;
-            randomNumbers.add(randomNumber);
-        }
-
-        return randomNumbers;
-    }
-
-    @Override
     public List<Scores> generateCounselors(String grouping) {
         List<Scores> scores =   null;
         try {
@@ -172,7 +151,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 //                Page<SecondRound> pageGZ = new Page<>(2,30);
 //                IPage<SecondRound> resGZ = secondRoundMapper.selectPage(pageGZ,queryWrapper);
 //                List<SecondRound> resGZRecords = resGZ.getRecords();
-                //List<SecondRound> list = secondRoundMapper.selectList(new QueryWrapper<SecondRound>().orderByDesc("id").last("LIMIT 30"));
+//                List<SecondRound> list = secondRoundMapper.selectList(new QueryWrapper<SecondRound>().orderByDesc("id").last("LIMIT 30"));
                 List<SecondRound> list = roundList.subList(30,60);
                 for(SecondRound secondRound:list){
                     long counselorId = secondRound.getCounselorId();
@@ -181,7 +160,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new SelectCounselorsException(e);
         }
         return scores;
     }
@@ -200,6 +179,28 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return true;
     }
 
+    @Override
+    public Integer getCountByGrouping(String grouping) {
+        return counselorsMapper.selectCount(new QueryWrapper<Counselors>().eq("grouping",grouping));
+    }
+
+    @Override
+    public User selectByUsername(String username) {
+        return getOne(new QueryWrapper<User>().eq("username", username));
+    }
+
+    @Override
+    public List<Integer> generateRandomNumbers(int n, int lowerBound, int upperBound) {
+        Random random = new Random();
+        List<Integer> randomNumbers = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            int randomNumber = random.nextInt(upperBound - lowerBound + 1) + lowerBound;
+            randomNumbers.add(randomNumber);
+        }
+
+        return randomNumbers;
+    }
     @Override
     public List<Scores> findAllCounselors() {
         return scoresMapper.selectList(new QueryWrapper<Scores>().orderByAsc("id"));

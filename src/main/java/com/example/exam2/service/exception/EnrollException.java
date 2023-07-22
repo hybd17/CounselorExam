@@ -1,6 +1,6 @@
 package com.example.exam2.service.exception;
 
-public class EnrollException extends RuntimeException{
+public class EnrollException extends ServiceException{
     public EnrollException() {
         super();
     }

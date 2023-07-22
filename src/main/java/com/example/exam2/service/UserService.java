@@ -1,11 +1,8 @@
 package com.example.exam2.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.exam2.entity.Counselors;
 import com.example.exam2.entity.Scores;
-import com.example.exam2.entity.SecondRound;
 import com.example.exam2.entity.User;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

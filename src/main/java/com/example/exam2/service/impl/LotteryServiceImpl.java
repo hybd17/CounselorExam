@@ -112,6 +112,9 @@ public class LotteryServiceImpl extends ServiceImpl<CounselorsMapper,Counselors>
         return true;
     }
 
+    /**
+     * 随机从list中抽签 抽一删一
+     */
     public static String getGrouping(List<Integer> list){
         Random random = new Random();
         int randomIndex = random.nextInt(list.size());
