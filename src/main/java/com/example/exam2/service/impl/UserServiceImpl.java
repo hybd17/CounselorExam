@@ -203,7 +203,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
     @Override
     public List<Scores> findAllCounselors() {
-        return scoresMapper.selectList(new QueryWrapper<Scores>().orderByAsc("id"));
+        List<SecondRound> list = secondRoundMapper.selectList(new QueryWrapper<SecondRound>().orderByAsc("counselor_id"));
+        List<Scores> scores1 = new ArrayList<>();
+        List<Scores> scoreS2 = new ArrayList<>();
+        for (SecondRound secondRound:list){
+            Scores scores = scoresMapper.selectOne(new QueryWrapper<Scores>().eq("counselor_id",secondRound.getCounselorId()));
+            if(scores.getGrouping().equals("本科组"))
+                scores1.add(scores);
+            else
+                scoreS2.add(scores);
+        }
+        List<Scores> concatList = new ArrayList<>(scores1);
+        concatList.addAll(scoreS2);
+        return concatList;
     }
 
     @Override
