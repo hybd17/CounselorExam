@@ -8,7 +8,7 @@
 
 ##### 接口文档地址:https://console-docs.apipost.cn/preview/fd8eb63d697fea25/8c500297a2229788
 
-##### PDF文档实例：![image-20230723201045883](C:\Users\T\AppData\Roaming\Typora\typora-user-images\image-20230723201045883.png)
+##### PDF文档实例：![](src/main/resources/static/pdf.png)
 
 ### 项目难点
 
