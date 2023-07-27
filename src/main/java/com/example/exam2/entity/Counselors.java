@@ -3,11 +3,12 @@ package com.example.exam2.entity;
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @TableName("counselors")
-public class Counselors {
+public class Counselors implements Serializable {
     @TableId(type = IdType.AUTO)
     private long id;
     private long schoolId;

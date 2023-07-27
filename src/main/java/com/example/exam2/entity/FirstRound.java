@@ -5,9 +5,11 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
 @TableName("first_round")
-public class FirstRound {
+public class FirstRound implements Serializable {
     @TableId(type = IdType.AUTO)
     private long id;
     private long counselorId;

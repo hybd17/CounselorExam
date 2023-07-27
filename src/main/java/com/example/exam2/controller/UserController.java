@@ -5,6 +5,7 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
+import com.example.exam2.aop.CheckRole;
 import com.example.exam2.entity.Scores;
 import com.example.exam2.entity.User;
 import com.example.exam2.service.UserService;
@@ -14,6 +15,8 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -29,6 +32,8 @@ public class UserController {
 
     @Resource
     private UserService userService;
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
     @PostMapping("/register")
     public R register(@RequestBody User user){
         boolean success = userService.register(user);
@@ -193,6 +198,12 @@ public class UserController {
         }
 
         return R.ok();
+    }
+    @GetMapping("/getToken")
+    @CheckRole("BKadmin")
+    public R getToken() {
+        String token = (String) redisTemplate.opsForValue().get("token");
+        return R.ok().message(token);
     }
 
 
